@@ -20,7 +20,7 @@ function MoviesList() {
     console.log(parsedResponse);
 
     getMovieList()
-      .then((res) => setMovies(res))
+      .then((parsedResponse) => setMovies(parsedResponse))
       .catch((err) => console.log(err));
   };
 
