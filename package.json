@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production node backend/app",
-    "dev": "cross-env NODE_ENV=development nodemon backend/app"
+    "dev": "cross-env NODE_ENV=development nodemon backend/app",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC",
