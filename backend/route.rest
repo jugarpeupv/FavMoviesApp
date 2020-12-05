@@ -1,0 +1,28 @@
+GET http://localhost:4000/movies
+
+###
+POST http://localhost:4000/movies
+Content-Type: application/json
+{
+    "name": "Shutter Island",
+    "rating": 5,
+    "description": "increible pelicula"
+}
+
+###
+GET http://localhost:4000/movies/5fc626df8ed60c05071f4cb2
+
+
+####
+PUT http://localhost:4000/movies/5fcbb92a1a52c316316dd76d
+Content-Type: application/json
+
+{
+    "name": "Memanto",
+    "rating": 3,
+    "description": "increible pelicullon"
+}
+
+#######
+
+DELETE http://localhost:4000/movies/5fc3cd7a42b7450dfdfc0be9
