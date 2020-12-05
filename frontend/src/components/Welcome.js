@@ -8,8 +8,8 @@ function Welcome() {
         <p className="lead">This is a web app to store your fav movies</p>
         <hr className="my-4" />
         <p>
-          Soon, you will see your own movies and public movie lists from other
-          users
+          Soon, a passport login will be implemented and you will only be able
+          to see your movie list and others people's public lists
         </p>
         <p className="lead">
           <a
