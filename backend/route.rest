@@ -26,3 +26,23 @@ Content-Type: application/json
 #######
 
 DELETE http://localhost:4000/movies/5fc3cd7a42b7450dfdfc0be9
+
+
+#######
+POST http://localhost:4000/users/register
+Content-Type: application/json
+
+{
+    "username": "Carlos",
+    "password": "123"
+}
+
+
+#######
+POST http://localhost:4000/users/login
+Content-Type: application/json
+
+{
+    "username": "Julio",
+    "password": "123"
+}

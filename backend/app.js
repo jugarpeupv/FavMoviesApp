@@ -4,6 +4,10 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 const mongoose = require("mongoose");
+const passport = require("passport");
+const expressSession = require("express-session");
+const cookieParser = require("cookie-parser");
+const passportLocal = require("passport-local");
 
 // Load config
 dotenv.config({ path: "./config/config.env" });
@@ -30,10 +34,11 @@ app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 // Routes
 app.use("/movies", require("./routes/index"));
+app.use("/users", require("./routes/login"));
 
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
-);
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
+// );
 
 const PORT = process.env.PORT || 5000;
 
