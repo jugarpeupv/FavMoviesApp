@@ -5,9 +5,10 @@ const morgan = require("morgan");
 const connectDB = require("./config/db");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const expressSession = require("express-session");
+const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passportLocal = require("passport-local");
+const cors = require("cors");
 
 // Load config
 dotenv.config({ path: "./config/config.env" });
@@ -16,29 +17,55 @@ dotenv.config({ path: "./config/config.env" });
 const app = express();
 connectDB();
 
-// Middlewares
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
-// });
-
-// Logging
-if (process.env.NODE_ENV == "development") {
-  app.use(morgan("dev"));
-}
+// --------------------------Middlewares
 
 // Static Files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+//Config
+app.use(cookieParser(process.env.SECRET));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+if (process.env.NODE_ENV == "development") {
+  app.use(morgan("dev"));
+}
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+//Session support
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+//Passport-middleware !Important to invoke passport.session() after session support
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Strategy
+require("./passportConfig")(passport);
+
+//Keeping track of req.user and req.session
+app.use((req, res, next) => {
+  console.log("req.user:");
+  console.log(req.user);
+  console.log("req.session:");
+  console.log(req.session);
+  next();
+});
 
 // Routes
 app.use("/movies", require("./routes/index"));
 app.use("/users", require("./routes/login"));
 
-// app.get("*", (req, res) =>
-//   res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
-// );
+//-------------------------Server
 
 const PORT = process.env.PORT || 5000;
 

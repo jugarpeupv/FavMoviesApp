@@ -48,7 +48,7 @@ function MoviesList() {
             </div>
 
             <Link
-              to={`/movie/:${movie._id}`}
+              to={`/movie/${movie._id}`}
               className="btn bg-dark text-white mb-5 mt-0 flex"
             >
               Edit

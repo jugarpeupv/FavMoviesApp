@@ -3,6 +3,8 @@ import React, { Fragment, useEffect, useState } from "react";
 function Welcome() {
   const [user, setUser] = useState([]);
   const [loginErrorMessage, setLoginErrorMessage] = useState();
+  const [inputUsername, setInputUsername] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
 
   // Handle X LoginErrorMessage
   const handleLoginErrorMessage = () => {
@@ -15,10 +17,7 @@ function Welcome() {
   };
 
   // Handle Login Click
-  const handleClick = async () => {
-    const userName = document.getElementById("inputUserName");
-    const userPassword = document.getElementById("inputUserPassword");
-
+  const handleLoginClick = async () => {
     async function getUser() {
       const options = {
         method: "POST",
@@ -26,8 +25,8 @@ function Welcome() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: userName.value,
-          password: userPassword.value,
+          username: inputUsername,
+          password: inputPassword,
         }),
       };
 
@@ -44,8 +43,8 @@ function Welcome() {
         }
       })
       .catch((err) => console.log(err));
-    userName.value = "";
-    userPassword.value = "";
+    setInputUsername("");
+    setInputPassword("");
   };
 
   return (
@@ -90,11 +89,11 @@ function Welcome() {
             <hr className="my-4" />
 
             {loginErrorMessage ? (
-              <div class="alert alert-dismissible alert-danger w-50 h-25">
+              <div className="alert alert-dismissible alert-danger w-50 h-25">
                 <button
                   onClick={handleLoginErrorMessage}
                   type="button"
-                  class="close"
+                  className="close"
                   data-dismiss="alert"
                 >
                   &times;
@@ -113,6 +112,8 @@ function Welcome() {
                 className="form-control w-25"
                 autoComplete="off"
                 id="inputUserName"
+                value={inputUsername}
+                onChange={(e) => setInputUsername(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -124,12 +125,14 @@ function Welcome() {
                 className="form-control w-25"
                 autoComplete="off"
                 id="inputUserPassword"
+                value={inputPassword}
+                onChange={(e) => setInputPassword(e.target.value)}
               />
             </div>
 
             <button
               type="button"
-              onClick={handleClick}
+              onClick={handleLoginClick}
               className="btn bg-dark text-white"
             >
               Login

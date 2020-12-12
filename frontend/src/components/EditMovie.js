@@ -7,20 +7,18 @@ function EditMovie({ match }) {
     rating: 1,
     description: "",
   });
+  const [inputTitle, setInputTitle] = useState("");
+  const [inputSel, setInputSel] = useState("");
+  const [inputDesc, setInputDesc] = useState("");
 
-  let rawParamsId = match.params.id;
-  let parsedParamsId = rawParamsId.substring(1, 25);
-  const nameInput = document.getElementById("inputDefault");
-  const sel = document.getElementById("exampleSelect1");
-  const descInput = document.getElementById("exampleTextarea");
-
+  // Handle Update Click
   const handleUpdate = async () => {
     const data = {
-      name: nameInput.value,
-      rating: sel.value,
-      description: descInput.value,
+      name: inputTitle,
+      rating: inputSel,
+      description: inputDesc,
     };
-    const url = "/movies/" + parsedParamsId;
+    const url = "/movies/" + match.params.id;
     const options = {
       method: "PUT",
       headers: {
@@ -34,24 +32,20 @@ function EditMovie({ match }) {
     window.location = "/movieslist";
   };
 
-  async function getMovieIdData() {
-    const rawResponse = await fetch("/movies/" + parsedParamsId);
-    const parsedResponse = await rawResponse.json();
-    console.log(parsedResponse);
-    return parsedResponse;
-  }
-
   useEffect(() => {
     let mounted = true;
-    const nameInput = document.getElementById("inputDefault");
-    const sel = document.getElementById("exampleSelect1");
-    const descInput = document.getElementById("exampleTextarea");
+    async function getMovieIdData() {
+      const rawResponse = await fetch("/movies/" + match.params.id);
+      const parsedResponse = await rawResponse.json();
+      console.log(parsedResponse);
+      return parsedResponse;
+    }
     getMovieIdData()
       .then((response) => {
         setMovie(response);
-        nameInput.value = response.name;
-        sel.value = response.rating;
-        descInput.value = response.description;
+        setInputTitle(response.name);
+        setInputSel(response.rating);
+        setInputDesc(response.description);
       })
       .catch((err) => console.log(err));
     return () => (mounted = false);
@@ -68,12 +62,21 @@ function EditMovie({ match }) {
           className="form-control w-50"
           placeholder="Title"
           autoComplete="off"
+          value={inputTitle}
+          onChange={(e) => {
+            setInputTitle(e.target.value);
+          }}
           id="inputDefault"
         />
       </div>
       <div className="form-group">
         <label htmlFor="exampleSelect1">Rating:</label>
-        <select className="form-control w-25" id="exampleSelect1">
+        <select
+          className="form-control w-25"
+          id="exampleSelect1"
+          value={inputSel}
+          onChange={(e) => setInputSel(e.target.value)}
+        >
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -87,6 +90,10 @@ function EditMovie({ match }) {
           className="form-control w-50"
           id="exampleTextarea"
           rows="5"
+          onChange={(e) => {
+            setInputDesc(e.target.value);
+          }}
+          value={inputDesc}
         ></textarea>
       </div>
       <button
