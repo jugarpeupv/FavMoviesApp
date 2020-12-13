@@ -34,6 +34,7 @@ function Welcome() {
       const parsedResponse = await response.json();
       return parsedResponse;
     }
+
     getUser()
       .then((res) => {
         if (res.message != undefined) {
@@ -46,6 +47,12 @@ function Welcome() {
     setInputUsername("");
     setInputPassword("");
   };
+
+  useEffect(() => {
+    let mounted = true;
+
+    return () => (mounted = false);
+  }, []);
 
   return (
     <Fragment>

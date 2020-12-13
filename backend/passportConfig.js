@@ -7,15 +7,27 @@ module.exports = function (passport) {
     new LocalStrategy((username, password, done) => {
       User.findOne({ username: username }, (err, user) => {
         if (err) throw err;
-        if (!user) return done(null, false);
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (err) throw err;
-          if (result === true) {
-            return done(null, user);
-          } else {
-            return done(null, false);
-          }
-        });
+        if (!user) {
+          console.log("New LocalStrategy no user found");
+          return done(null, false);
+        }
+        console.log("New LocalStrategy a user was found");
+        console.log("New LocalStrategy username: " + username);
+        console.log("New LocalStrategy password: " + password);
+
+        if (user) {
+          bcrypt.compare(password, user.password, (err, result) => {
+            if (err) throw err;
+            if (result === true) {
+              console.log("password matched");
+              console.log(user);
+              return done(null, user);
+            } else {
+              console.log("password didnt match");
+              return done(null, false);
+            }
+          });
+        }
       });
     })
   );

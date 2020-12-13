@@ -16,8 +16,16 @@ dotenv.config({ path: "./config/config.env" });
 // Initializations
 const app = express();
 connectDB();
+const MongoStore = require("connect-mongo")(session);
+// const connection = mongoose
+//   .connect(process.env.MONGO_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: true,
+//   })
+//   .catch((error) => console.log(error));
 
-// --------------------------Middlewares
+// --------------------------Middlewares-------------------------------------------
 
 // Static Files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -37,11 +45,19 @@ app.use(
 );
 
 //Session support
+const sessionStore = new MongoStore({
+  mongooseConnection: mongoose.connection,
+  collection: "sessions",
+});
 app.use(
   session({
     secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
   })
 );
 
@@ -65,7 +81,7 @@ app.use((req, res, next) => {
 app.use("/movies", require("./routes/index"));
 app.use("/users", require("./routes/login"));
 
-//-------------------------Server
+//-------------------------Server------------------------------------------------
 
 const PORT = process.env.PORT || 5000;
 
