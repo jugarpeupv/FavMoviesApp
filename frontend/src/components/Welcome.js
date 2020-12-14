@@ -12,8 +12,11 @@ function Welcome() {
   };
 
   // Handle Logout Click
-  const handleLogout = () => {
-    setUser([]);
+  const handleLogout = async () => {
+    const logoutResponse = await fetch("/users/logout");
+    const parsedLogoutRepsonse = await logoutResponse.json();
+    console.log(parsedLogoutRepsonse);
+    setUser("");
   };
 
   // Handle Login Click
@@ -48,15 +51,19 @@ function Welcome() {
     setInputPassword("");
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     let mounted = true;
-
+    const passportResponse = await fetch("/users/login");
+    const parsedPassportResponse = await passportResponse.json();
+    if (parsedPassportResponse) {
+      setUser(parsedPassportResponse.user);
+    }
     return () => (mounted = false);
   }, []);
 
   return (
     <Fragment>
-      {user[0] !== undefined ? (
+      {user ? (
         <div className="mt-5">
           <div className="jumbotron flex-auto justify-content-between pt-3">
             <button
@@ -66,9 +73,7 @@ function Welcome() {
             >
               Logout
             </button>
-            <h1 className="display-3">
-              Hello, {user[0] !== undefined ? user[0].username : "user"}!
-            </h1>
+            <h1 className="display-3">Hello, {user.username}!</h1>
             <p className="lead">This is a web app to store your fav movies</p>
             <hr className="my-4" />
             <p>
@@ -89,9 +94,7 @@ function Welcome() {
       ) : (
         <div className="mt-5">
           <div className="jumbotron">
-            <h1 className="display-3">
-              Hello, {user[0] !== undefined ? user[0].username : "user"}!
-            </h1>
+            <h1 className="display-3">Hello, user!</h1>
             <p className="lead">This is a web app to store your fav movies</p>
             <hr className="my-4" />
 

@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 require("../passportConfig")(passport);
 
-//  @desc Add a movie
-// @route POST /movies
+//  @desc login
+// @route POST /users/login
 router.post("/login", async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
@@ -16,12 +16,28 @@ router.post("/login", async (req, res, next) => {
         if (err) throw err;
         // res.send({message: "Succesfully Authenticated"});
         console.log("Succesfully Authenticated from /login route");
-        console.log(req.user);
+        res.send(req.user);
 
         next();
       });
     }
   })(req, res, next);
+});
+
+//  @desc login
+// @route GET /users/login
+router.get("/login", (req, res) => {
+  const data = { user: req.user, passport: req.session.passport };
+  res.send(data);
+});
+
+//  @desc logout
+// @route GET /users/logout
+router.get("/logout", (req, res) => {
+  if (req.user) {
+    req.logOut();
+    res.send({ message: "Succesfully logout" });
+  }
 });
 
 module.exports = router;
