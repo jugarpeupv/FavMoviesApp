@@ -12,7 +12,7 @@ router.post("/login", async (req, res, next) => {
     if (err) throw err;
     if (!user) res.send({ message: "No user exists or password doesnt match" });
     else {
-      req.logIn(user, async (err) => {
+      req.logIn(user, (err) => {
         if (err) throw err;
         // res.send({message: "Succesfully Authenticated"});
         console.log("Succesfully Authenticated from /login route");
