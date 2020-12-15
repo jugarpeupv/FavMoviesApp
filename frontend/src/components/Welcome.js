@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 function Welcome() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState();
   const [loginErrorMessage, setLoginErrorMessage] = useState();
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");

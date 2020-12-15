@@ -39,6 +39,7 @@ function AddMovie() {
   return (
     <div>
       <form onSubmit={handleOnSubmit} id="formAddMovie">
+        {/* TITLE */}
         <div className="form-group">
           <label className="col-form-label" htmlFor="inputDefault">
             Title:
@@ -53,6 +54,8 @@ function AddMovie() {
             }}
           />
         </div>
+
+        {/* RATING */}
         <div className="form-group">
           <label htmlFor="exampleSelect1">Rating:</label>
           <select
@@ -69,6 +72,17 @@ function AddMovie() {
             <option>5</option>
           </select>
         </div>
+
+        {/* PUBLIC OR PRIVATE INPUT */}
+        <div class="form-group">
+          <select class="custom-select w-25">
+            <option selected="">Select public or private</option>
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
+          </select>
+        </div>
+
+        {/* DESCRIPTION TEXT AREA */}
         <div className="form-group">
           <label htmlFor="exampleTextarea">Description</label>
           <textarea
@@ -80,6 +94,8 @@ function AddMovie() {
             }}
           ></textarea>
         </div>
+
+        {/* SUBMIT BUTTON*/}
         <button type="submit" className="btn bg-dark text-white">
           Submit
         </button>
