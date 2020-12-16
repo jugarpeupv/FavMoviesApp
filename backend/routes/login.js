@@ -39,4 +39,29 @@ router.get("/logout", (req, res) => {
   }
 });
 
+//  @desc Add a movie
+// @route POST /movies
+router.post("/register", async (req, res) => {
+  try {
+    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const user = await User.findOne({ username: req.body.username });
+    if (user) {
+      res.send({ message: "User already exits" });
+    } else {
+      const newUser = new User({
+        username: req.body.username,
+        password: encryptedPassword,
+      });
+      await newUser.save();
+      res.send({
+        message: "Congrats! You are now registered, please proceed to login",
+      });
+    }
+  } catch (err) {
+    res.send({ message: "Error, unable to create User" });
+    console.log(err);
+  }
+});
+
 module.exports = router;

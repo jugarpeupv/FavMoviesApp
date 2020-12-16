@@ -2,13 +2,41 @@ import React, { Fragment, useEffect, useState } from "react";
 
 function Welcome() {
   const [user, setUser] = useState();
-  const [loginErrorMessage, setLoginErrorMessage] = useState();
+  const [message, setMessage] = useState();
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
 
-  // Handle X LoginErrorMessage
-  const handleLoginErrorMessage = () => {
-    setLoginErrorMessage("");
+  // Handle X Message
+  const handleMessage = () => {
+    setMessage("");
+  };
+
+  // Handle Register Click
+  const handleRegister = async () => {
+    async function getUser() {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: inputUsername,
+          password: inputPassword,
+        }),
+      };
+
+      const response = await fetch("/users/register", options);
+      const parsedResponse = await response.json();
+      return parsedResponse;
+    }
+
+    getUser()
+      .then((res) => {
+        setMessage(res);
+      })
+      .catch((err) => console.log(err));
+    setInputUsername("");
+    setInputPassword("");
   };
 
   // Handle Logout Click
@@ -41,7 +69,7 @@ function Welcome() {
     getUser()
       .then((res) => {
         if (res.message != undefined) {
-          setLoginErrorMessage(res);
+          setMessage(res);
         } else {
           setUser(res);
         }
@@ -98,21 +126,24 @@ function Welcome() {
             <p className="lead">This is a web app to store your fav movies</p>
             <hr className="my-4" />
 
-            {loginErrorMessage ? (
+            {/* Show message */}
+            {message ? (
               <div className="alert alert-dismissible alert-danger w-50 h-25">
                 <button
-                  onClick={handleLoginErrorMessage}
+                  onClick={handleMessage}
                   type="button"
                   className="close"
                   data-dismiss="alert"
                 >
                   &times;
                 </button>
-                <strong>{loginErrorMessage.message}</strong>
+                <strong>{message.message}</strong>
               </div>
             ) : (
               <p></p>
             )}
+            {/* End of show message */}
+
             <div className="form-group">
               <label className="col-form-label" htmlFor="inputDefault">
                 Username:
@@ -147,7 +178,11 @@ function Welcome() {
             >
               Login
             </button>
-            <button type="submit" className="btn bg-dark text-white ml-2">
+            <button
+              type="submit"
+              className="btn bg-dark text-white ml-2"
+              onClick={handleRegister}
+            >
               Register
             </button>
           </div>
