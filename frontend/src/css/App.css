@@ -2,3 +2,13 @@
   background-color: white !important;
   border: 1px solid gray;
 }
+
+.card-modif {
+  align-items: center !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.p-modif {
+  margin-top: 0 !important;
+}

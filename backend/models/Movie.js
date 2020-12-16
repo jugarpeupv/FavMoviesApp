@@ -10,12 +10,20 @@ const MovieSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  privacy: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: false,
   },
-  type: {
-    enum: ["Public", "Private"],
+  userid: {
+    type: String,
+    required: false,
+  },
+  username: {
+    type: String,
     required: false,
   },
   createdAt: {

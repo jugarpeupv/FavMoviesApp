@@ -3,7 +3,8 @@ import { useState } from "react";
 
 function AddMovie() {
   const [movieName, setMovieName] = useState("");
-  const [movieRating, setMovieRating] = useState("");
+  const [movieRating, setMovieRating] = useState("1");
+  const [moviePrivacy, setMoviePrivacy] = useState("Public");
   const [movieDescription, setMovieDescription] = useState("");
 
   //Handle on Submit Button
@@ -13,6 +14,7 @@ function AddMovie() {
     const dataMovieInfo = {
       name: movieName,
       rating: movieRating,
+      privacy: moviePrivacy,
       description: movieDescription,
     };
 
@@ -75,8 +77,14 @@ function AddMovie() {
 
         {/* PUBLIC OR PRIVATE INPUT */}
         <div class="form-group">
-          <select class="custom-select w-25">
-            <option selected="">Select public or private</option>
+          <label htmlFor="selectPublicPrivate">Privacy: </label>
+          <select
+            class="custom-select w-25 d-block"
+            id="selectPublicPrivate"
+            onChange={(e) => {
+              setMoviePrivacy(e.target.value);
+            }}
+          >
             <option value="Public">Public</option>
             <option value="Private">Private</option>
           </select>

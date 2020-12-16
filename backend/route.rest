@@ -3,9 +3,11 @@ GET http://localhost:4000/movies
 ###
 POST http://localhost:4000/movies
 Content-Type: application/json
+
 {
-    "name": "Shutter Island",
+    "name": "Ahorasiqueno",
     "rating": 5,
+    "privacy": "private",
     "description": "increible pelicula"
 }
 

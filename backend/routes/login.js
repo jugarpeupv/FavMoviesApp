@@ -17,7 +17,6 @@ router.post("/login", async (req, res, next) => {
         // res.send({message: "Succesfully Authenticated"});
         console.log("Succesfully Authenticated from /login route");
         res.send(req.user);
-
         next();
       });
     }

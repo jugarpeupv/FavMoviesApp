@@ -7,7 +7,22 @@ const Movie = require("../models/Movie");
 router.get("/", async (req, res) => {
   try {
     const movies = await Movie.find();
-    res.json(movies);
+    // Experimental
+    if (req.session.passport.user) {
+      const filteredMovies = movies.filter(
+        (movie) =>
+          movie.privacy === "public" ||
+          movie.userid === req.session.passport.user
+      );
+      console.log("We are here with req.passport");
+      res.json(filteredMovies);
+    } else {
+      const filteredMovies = movies.filter(
+        (movie) => movie.privacy === "Public"
+      );
+      console.log("We are here with req.passport");
+      res.json(filteredMovies);
+    }
   } catch (err) {
     console.log("There is an error");
     console.log(err);
@@ -36,7 +51,10 @@ router.post("/", async (req, res) => {
   const newMovie = new Movie({
     name: req.body.name,
     rating: req.body.rating,
+    privacy: req.body.privacy,
     description: req.body.description,
+    userid: req.user._id,
+    username: req.user.username,
   });
 
   try {

@@ -11,7 +11,7 @@ function MoviesList() {
     return parsedResponse;
   }
 
-  // onClick functions
+  // Handle Delete Function
   const handleDelete = async (movieid) => {
     const response = await fetch(`/movies/${movieid}`, {
       method: "DELETE",
@@ -27,6 +27,7 @@ function MoviesList() {
   // Action displayed when loading the page the first time
   useEffect(() => {
     let mounted = true;
+
     getMovieList()
       .then((response) => setMovies(response))
       .catch((err) => console.log(err));
@@ -39,24 +40,38 @@ function MoviesList() {
       {movies.map((movie) => {
         return (
           <div key={movie._id}>
+            {/* Card Movie */}
             <div className="card border-secondary mb-3 w-75">
-              <div className="card-header">{movie.name}</div>
+              <div className="card-header card-modif">
+                <div>{movie.name}</div>
+                <div>
+                  <span class="badge badge-info p-2 text-uppercase">
+                    {movie.privacy}
+                  </span>
+                </div>
+              </div>
               <div className="card-body">
                 <h6 className="card-text">Rating: {movie.rating}</h6>
-                <p className="card-text">Description: {movie.description}</p>
+                <span className="card-text">
+                  Description: {movie.description}
+                </span>
+                <p className="card-text mt-1">Created by: {movie.username}</p>
               </div>
             </div>
 
+            {/* Edit Button */}
             <Link
               to={`/movie/${movie._id}`}
-              className="btn bg-dark text-white mb-5 mt-0 flex"
+              className="btn bg-dark text-white mb-5 flex"
             >
               Edit
             </Link>
+
+            {/* Delete Button */}
             <button
               type="button"
               onClick={() => handleDelete(movie._id)}
-              className="btn bg-dark text-white mb-5 ml-2 mt-0"
+              className="btn bg-dark text-white mb-5 ml-2"
             >
               Delete
             </button>
