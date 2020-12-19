@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   try {
     const movies = await Movie.find();
     // Experimental
-    if (req.session.passport.user) {
+    if (req.session.passport.user !== undefined) {
       const filteredMovies = movies.filter(
         (movie) =>
           movie.privacy === "public" ||
