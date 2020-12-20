@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import FaceIcon from "@material-ui/icons/Face";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import LocalMoviesIcon from "@material-ui/icons/LocalMovies";
+import StarsSharpIcon from "@material-ui/icons/StarsSharp";
+import DescriptionSharpIcon from "@material-ui/icons/DescriptionSharp";
 
 function MoviesList() {
   const [movies, setMovies] = useState([]);
@@ -43,19 +50,42 @@ function MoviesList() {
             {/* Card Movie */}
             <div className="card border-secondary mb-3 w-75">
               <div className="card-header card-modif">
-                <div>{movie.name}</div>
                 <div>
-                  <span class="badge badge-info p-2 text-uppercase">
-                    {movie.privacy}
-                  </span>
+                  <LocalMoviesIcon className="mr-2" />
+                  {movie.name}
+                </div>
+
+                <div>
+                  {movie.privacy === "Public" ? (
+                    <div>
+                      <VisibilityIcon className="mr-3" />
+                      <span class="badge badge-pill badge-info p-2 text-uppercase">
+                        {movie.privacy}
+                      </span>
+                    </div>
+                  ) : (
+                    <div>
+                      <VisibilityOffIcon className="mr-3" />
+                      <span class="badge badge-pill badge-warning p-2 text-uppercase">
+                        {movie.privacy}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="card-body">
-                <h6 className="card-text">Rating: {movie.rating}</h6>
+                <h6 className="card-text">
+                  <StarsSharpIcon className="mr-2" />
+                  {movie.rating}
+                </h6>
                 <span className="card-text">
-                  Description: {movie.description}
+                  <DescriptionSharpIcon className="mr-2" />
+                  {movie.description}
                 </span>
-                <p className="card-text mt-1">Created by: {movie.username}</p>
+                <p className="card-text mt-1">
+                  <AccountCircleIcon className="mr-2" />
+                  {movie.username}
+                </p>
               </div>
             </div>
 

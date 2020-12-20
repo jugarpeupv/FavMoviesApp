@@ -1,5 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import LocalMoviesIcon from "@material-ui/icons/LocalMovies";
+import StarsSharpIcon from "@material-ui/icons/StarsSharp";
+import DescriptionSharpIcon from "@material-ui/icons/DescriptionSharp";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import FaceIcon from "@material-ui/icons/Face";
 
 function AddMovie() {
   const [movieName, setMovieName] = useState("");
@@ -44,6 +51,7 @@ function AddMovie() {
         {/* TITLE */}
         <div className="form-group">
           <label className="col-form-label" htmlFor="inputDefault">
+            <LocalMoviesIcon className="mr-1" />
             Title:
           </label>
           <input
@@ -59,7 +67,10 @@ function AddMovie() {
 
         {/* RATING */}
         <div className="form-group">
-          <label htmlFor="exampleSelect1">Rating:</label>
+          <label htmlFor="exampleSelect1">
+            <StarsSharpIcon className="mr-1" />
+            Rating:
+          </label>
           <select
             className="form-control w-25"
             id="exampleSelect1"
@@ -77,7 +88,10 @@ function AddMovie() {
 
         {/* PUBLIC OR PRIVATE INPUT */}
         <div class="form-group">
-          <label htmlFor="selectPublicPrivate">Privacy: </label>
+          <label htmlFor="selectPublicPrivate">
+            <VisibilityIcon className="mr-1" />
+            Privacy:{" "}
+          </label>
           <select
             class="custom-select w-25 d-block"
             id="selectPublicPrivate"
@@ -92,7 +106,11 @@ function AddMovie() {
 
         {/* DESCRIPTION TEXT AREA */}
         <div className="form-group">
-          <label htmlFor="exampleTextarea">Description</label>
+          <label htmlFor="exampleTextarea">
+            {" "}
+            <DescriptionSharpIcon className="mr-1" />
+            Description
+          </label>
           <textarea
             className="form-control w-50"
             id="exampleTextarea"
