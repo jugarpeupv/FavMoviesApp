@@ -12,7 +12,8 @@
     "start": "cross-env NODE_ENV=production node backend/app",
     "dev": "cross-env NODE_ENV=development nodemon backend/app",
     "build": "node backend/app && npm run build --prefix frontend",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend",
+    "haroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC",
