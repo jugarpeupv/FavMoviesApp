@@ -14,7 +14,7 @@
     "build": "node backend/app && npm run build --prefix frontend",
     "aa": "cd frontend && npm install",
     "ab": "cd frontend && npm run build",
-    "heroku-postbuild": "npm run aa && npm run ab",
+    "heroku-postbuild": "cd frontend && npm run build",
     "haroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
