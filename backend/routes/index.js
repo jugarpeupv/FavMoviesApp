@@ -8,13 +8,15 @@ router.get("/", async (req, res) => {
   try {
     const movies = await Movie.find();
     // Experimental
-    if (req.session.passport.user != undefined) {
+    if (req.session.passport != undefined) {
       const filteredMovies = movies.filter(
         (movie) =>
           movie.privacy == "Public" ||
           movie.userid === req.session.passport.user
       );
-      console.log("We are here with req.passport");
+      console.log(
+        "We are here req.session.passport.user !=undefined with req.passport"
+      );
       res.json(filteredMovies);
     } else {
       const filteredMovies = movies.filter(
@@ -35,7 +37,7 @@ router.get("/:id", async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     if (!movie) {
-      res.json({ message: "Sorry, no movie founded" });
+      res.json({ message: "Sorry dude, no movie founded" });
     } else {
       res.json(movie);
     }
@@ -108,10 +110,27 @@ router.put("/:id", async (req, res) => {
 // @route DELETE /movies/:id
 router.delete("/:id", async (req, res) => {
   try {
-    await Movie.deleteOne({ _id: req.params.id });
-    res.send({ message: "Film deleted" });
+    const movieDeleted = await Movie.findById({ _id: req.params.id });
+    console.log("movieDeleted: " + movieDeleted);
+    //we should first check if req.session.passport exists
+    console.log("req.session.passport.user: " + req.session.passport.user);
+    if (
+      req.session.passport.user == undefined &&
+      movieDeleted.userid == "Anonymous"
+    ) {
+      await Movie.deleteOne({ _id: req.params.id });
+      res.send({ message: "Film deleted" });
+    } else if (req.session.passport.user == movieDeleted.userid) {
+      await Movie.deleteOne({ _id: req.params.id });
+      res.send({ message: "Film deleted" });
+    } else if (req.session.passport.user != movieDeleted.userid) {
+      res.send({
+        message:
+          "Sorry, you are not the user who created the film. Unable to delete.",
+      });
+    }
   } catch (err) {
-    res.send("Error");
+    res.send("Error deleting movie");
     console.log(err);
   }
 });

@@ -10,6 +10,12 @@ import DescriptionSharpIcon from "@material-ui/icons/DescriptionSharp";
 
 function MoviesList() {
   const [movies, setMovies] = useState([]);
+  const [deleteMsg, setDeleteMsg] = useState();
+
+  // Handle X Message
+  const handleMessage = () => {
+    setDeleteMsg("");
+  };
 
   // Fetch /movies function
   async function getMovieList() {
@@ -23,8 +29,13 @@ function MoviesList() {
     const response = await fetch(`/movies/${movieid}`, {
       method: "DELETE",
     });
-    const parsedResponse = await response.json();
-    console.log(parsedResponse);
+    const parsedMessage = await response.json();
+    console.log(parsedMessage);
+    setDeleteMsg(parsedMessage);
+    // We use a setTimeout in order to make the notification disappear after x secs
+    setTimeout(() => {
+      setDeleteMsg("");
+    }, 2000);
 
     getMovieList()
       .then((parsedResponse) => setMovies(parsedResponse))
@@ -44,6 +55,26 @@ function MoviesList() {
 
   return (
     <div className="mt-5">
+      {/* Show message */}
+      {deleteMsg ? (
+        <div
+          id="div_element"
+          className="alert alert-dismissible alert-danger w-50 h-25 ml-3 flex"
+        >
+          <button
+            onClick={handleMessage}
+            type="button"
+            className="close"
+            data-dismiss="alert"
+          >
+            &times;
+          </button>
+          <strong>{deleteMsg.message}</strong>
+        </div>
+      ) : (
+        <p></p>
+      )}
+      {/* End of show message */}
       {movies.map((movie) => {
         return (
           <div key={movie._id}>
@@ -59,14 +90,14 @@ function MoviesList() {
                   {movie.privacy === "Public" ? (
                     <div>
                       <VisibilityIcon className="mr-3" />
-                      <span class="badge badge-pill badge-info p-2 text-uppercase">
+                      <span className="badge badge-pill badge-info p-2 text-uppercase">
                         {movie.privacy}
                       </span>
                     </div>
                   ) : (
                     <div>
                       <VisibilityOffIcon className="mr-3" />
-                      <span class="badge badge-pill badge-warning p-2 text-uppercase">
+                      <span className="badge badge-pill badge-warning p-2 text-uppercase">
                         {movie.privacy}
                       </span>
                     </div>
@@ -88,7 +119,6 @@ function MoviesList() {
                 </p>
               </div>
             </div>
-
             {/* Edit Button */}
             <Link
               to={`/movie/${movie._id}`}
