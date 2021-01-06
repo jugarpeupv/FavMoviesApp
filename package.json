@@ -12,9 +12,9 @@
     "start": "cross-env NODE_ENV=production node backend/app",
     "dev": "cross-env NODE_ENV=development nodemon backend/app",
     "build": "node backend/app && npm run build --prefix frontend",
-    "aa": "cd frontend && npm install",
-    "ab": "cd frontend && npm run build",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm aa && npm ab",
+    "installfirst": "cd frontend && npm install",
+    "installsecond": "cd frontend && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm installfirst && npm installsecond",
     "haroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Julio Garcia",
