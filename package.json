@@ -13,12 +13,12 @@
     "dev": "cross-env NODE_ENV=development nodemon backend/app",
     "build": "node backend/app && npm run build --prefix frontend",
     "aa": "cd frontend && npm install",
-    "ab": "cd frontend && npm install && npm run build",
-    "heroku-postbuild": "cd frontend && npm run build",
+    "ab": "cd frontend && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm aa && npm ab",
     "haroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Julio Garcia",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
