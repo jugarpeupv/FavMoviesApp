@@ -2,10 +2,6 @@
   "name": "favmoviesapp",
   "version": "1.0.0",
   "description": "",
-  "engines": {
-    "node": "14.15.1",
-    "npm": "6.14.10"
-  },
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
