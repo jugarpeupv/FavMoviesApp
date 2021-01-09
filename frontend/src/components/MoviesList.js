@@ -59,7 +59,7 @@ function MoviesList() {
       {deleteMsg ? (
         <div
           id="div_element"
-          className="alert alert-dismissible alert-danger w-50 h-25 ml-3 flex"
+          className="alert alert-dismissible alert-danger w-51 h-25 ml-3 flex flexbox"
         >
           <button
             onClick={handleMessage}
