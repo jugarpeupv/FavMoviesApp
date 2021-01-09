@@ -93,7 +93,7 @@ function Welcome() {
     <Fragment>
       {user ? (
         <div className="mt-5">
-          <div className="jumbotron flex-auto justify-content-between pt-3 flex">
+          <div className="jumbotron flex-auto justify-content-between pt-3">
             <button
               type="button"
               onClick={handleLogout}
