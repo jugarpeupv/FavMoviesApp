@@ -122,7 +122,7 @@ function AddMovie() {
         </div>
 
         {/* SUBMIT BUTTON*/}
-        <button type="submit" className="btn bg-dark text-white flex">
+        <button type="submit" className="btn bg-dark text-white">
           Submit
         </button>
       </form>
