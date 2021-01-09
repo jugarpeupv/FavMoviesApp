@@ -7,6 +7,11 @@ node_modules/
 config/
 Procfile
 
+
+frontend/package-lock.json
+backend/package-lock.json
+package-lock.json
+
 # testing
 /coverage
 
